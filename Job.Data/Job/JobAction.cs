@@ -41,42 +41,50 @@ namespace Job.Data
         public async static Task<List<JobInfo>> GetList(Condition condition)
         {
             List<JobInfo> list = new List<JobInfo>();
-            string sql = "select * from dbo.JobInfo where 1=1 ";
-            DynamicParameters parameters = new DynamicParameters();
-            if (condition != null)
+            try
             {
-                #region 根据查询条件组合sql
-                if (!string.IsNullOrEmpty(condition.Name))
+                string sql = "select * from dbo.JobInfo where 1=1 ";
+                DynamicParameters parameters = new DynamicParameters();
+                if (condition != null)
                 {
-                    sql += "and Name like '%'+@Name+'%'";
-                    parameters.Add("Name", condition.Name);
+                    #region 根据查询条件组合sql
+                    if (!string.IsNullOrEmpty(condition.Name))
+                    {
+                        sql += "and Name like '%'+@Name+'%'";
+                        parameters.Add("Name", condition.Name);
+                    }
+                    if (!string.IsNullOrEmpty(condition.Creator))
+                    {
+                        sql += "and Creator like '%'+@Creator+'%'";
+                        parameters.Add("Creator", condition.Creator);
+                    }
+                    if (condition.Status.HasValue)
+                    {
+                        sql += "and Status like '%'+@Status+'%'";
+                        parameters.Add("Status", condition.Status.Value);
+                    }
+                    if (condition.CreateTimeStart.HasValue)
+                    {
+                        sql += "and CreateTime > @CreateTimeStart ";
+                        parameters.Add("CreateTimeStart", condition.CreateTimeStart);
+                    }
+                    if (condition.CreateTimeEnd.HasValue)
+                    {
+                        sql += "and CreateTime > @CreateTimeEnd ";
+                        parameters.Add("CreateTimeEnd", condition.CreateTimeEnd);
+                    }
+                    #endregion
                 }
-                if (!string.IsNullOrEmpty(condition.Creator))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    sql += "and Creator like '%'+@Creator+'%'";
-                    parameters.Add("Creator", condition.Creator);
+                    var templist = await conn.QueryAsync<JobInfo>(sql, parameters);
+                    return templist.ToList();
+                    //list = templist.Result.ToList();
                 }
-                if (condition.Status.HasValue)
-                {
-                    sql += "and Status like '%'+@Status+'%'";
-                    parameters.Add("Status", condition.Status.Value);
-                }
-                if (condition.CreateTimeStart.HasValue)
-                {
-                    sql += "and CreateTime > @CreateTimeStart ";
-                    parameters.Add("CreateTimeStart", condition.CreateTimeStart);
-                }
-                if (condition.CreateTimeEnd.HasValue)
-                {
-                    sql += "and CreateTime > @CreateTimeEnd ";
-                    parameters.Add("CreateTimeEnd", condition.CreateTimeEnd);
-                }
-                #endregion
             }
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            catch (Exception ex)
             {
-                var templist = await conn.QueryAsync<JobInfo>(sql, parameters);
-                list = templist.ToList();
+                var todolog = ex;
             }
             return list;
         }

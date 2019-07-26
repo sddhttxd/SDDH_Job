@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Linq;
 using Job.Data;
+using System.Threading.Tasks;
 
 namespace Job.WebSite.Controllers
 {
@@ -23,15 +24,11 @@ namespace Job.WebSite.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public ActionResult GetList(Condition data)
+        public async Task<ActionResult> GetList(Condition data)
         {
             //List<JobInfo> list = new List<JobInfo>();
-            var list = JobLogic.GetList(data);
-            return Json(new
-            {
-                rows = list,
-                total = list.Result == null ? 0 : list.Result.Count
-            });
+            var list = await JobLogic.GetList(data);
+            return Json(new { rows = list, total = list.Count });
         }
     }
 }
