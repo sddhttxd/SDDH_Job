@@ -1,0 +1,9 @@
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\bin\Debug\Job.Utility.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\bin\Debug\Job.Utility.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\bin\Debug\Newtonsoft.Json.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\bin\Debug\Newtonsoft.Json.xml
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\obj\Debug\Job.Utility.csproj.CoreCompileInputs.cache
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\obj\Debug\Job.Utility.csproj.CopyComplete
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\obj\Debug\Job.Utility.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\obj\Debug\Job.Utility.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Utility\obj\Debug\Job.Utility.csprojAssemblyReference.cache

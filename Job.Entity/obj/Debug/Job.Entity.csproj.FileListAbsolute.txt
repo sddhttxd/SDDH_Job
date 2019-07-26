@@ -1,0 +1,9 @@
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\bin\Debug\Job.Entity.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\bin\Debug\Job.Entity.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\bin\Debug\Newtonsoft.Json.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\bin\Debug\Newtonsoft.Json.xml
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\obj\Debug\Job.Entity.csproj.CoreCompileInputs.cache
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\obj\Debug\Job.Entity.csproj.CopyComplete
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\obj\Debug\Job.Entity.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\obj\Debug\Job.Entity.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Entity\obj\Debug\Job.Entity.csprojAssemblyReference.cache

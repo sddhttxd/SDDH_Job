@@ -1,0 +1,15 @@
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Data.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Data.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Dapper.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Entity.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Utility.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Newtonsoft.Json.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Entity.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Job.Utility.pdb
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Dapper.xml
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\bin\Debug\Newtonsoft.Json.xml
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\obj\Debug\Job.Data.csprojAssemblyReference.cache
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\obj\Debug\Job.Data.csproj.CoreCompileInputs.cache
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\obj\Debug\Job.Data.csproj.CopyComplete
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\obj\Debug\Job.Data.dll
+E:\SDDH\SDDH_Code\SDDH_Job\Job.Data\obj\Debug\Job.Data.pdb

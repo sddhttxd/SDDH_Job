@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "日志列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    @*<h2>日志列表</h2>*@
+    <form class="form-inline" role="form" style="margin-top:10px;margin-bottom:10px;">
+        <div style="margin-bottom:10px;">
+            <div class="form-group">
+                <label class="control-label">日志类型：</label>
+                <select id="sltLogType" class="form-control" style="width:150px;">
+                    <option value="0">全部日志</option>
+                    <option value="1">业务日志</option>
+                    <option value="2">错误日志</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Key：</label>
+                <input id="txtKeyValue" type="text" class="form-control" style="width:150px;" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">用户ID：</label>
+                <input id="txtUserID" type="text" class="form-control" style="width:150px;" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">客户端IP：</label>
+                <input id="txtClientIP" type="text" class="form-control" style="width:150px;" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">关键字：</label>
+                <input id="txtKeyWord" type="text" class="form-control" style="width:150px;" />
+            </div>
+        </div><div>
+            <div class="form-group">
+                <label class="control-label">起止时间：</label>
+                <div class='input-group date' id='dtStartTime' style="width:200px;">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>-
+                <div class='input-group date' id='dtEndTime' style="width:200px;">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-info btn-flat" id="btnSearch"><i class="glyphicon glyphicon-search"></i> 查询</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-hover ">
+        @*<thead>
+                <tr>
+                    <th data-field="RID" hidden="hidden">RID</th>
+                    <th data-field="Type">日志类型</th>
+                    <th data-field="KeyValue">Key值</th>
+                    <th data-field="LogTime">记录时间</th>
+                    <th data-field="Content">日志内容</th>
+                    <th data-field="UserID">用户ID</th>
+                    <th data-field="ClientIP">客户端IP</th>
+                </tr>
+            </thead>*@
+    </table>
+    @*<div id="toolbar">
+            <button type="button" class="btn btn-info btn-flat" id="btnSearch"><i class="glyphicon glyphicon-search"></i> 查询</button>
+        </div>*@
+    <!--[if lt IE 9]>
+        <p style="display:inline-block;font-weight:bold;font-size:16px;"> 您的浏览器(IE8)版本过低这将影响页面速度和美观,请联系运维安装360浏览器或者升级您的IE版本。</p>
+    <![endif]-->
+
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src="~/Scripts/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/privateoa-common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#dtStartTime').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm',
+                locale: moment.locale('zh-cn')
+            });
+            $('#dtEndTime').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm',
+                locale: moment.locale('zh-cn')
+            });
+        });
+
+        //初始化
+        var table = new Object();
+        table.Init = $(".table").bootstrapTable({
+            title: "日志列表",                  //标题
+            url: 'LogList',                    //请求后台的URL（*）
+            method: 'post',                     //请求方式（*）
+            async: false,                       //ajax请求的时候是同步还是异步。true为异步
+            //toolbar: '#toolbar',                //工具按钮用哪个容器
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            clickToSelect: true,                //是否启用点击选中行
+            singleSelect: true,                 //是否单选
+            showRefresh: true,                  //是否显示刷新按钮
+            showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+            showColumns: true,                  //是否显示所有的列
+            detailView: true,                  //是否显示父子表
+            //queryParams: table.queryParams,          //传递参数（*）
+            queryParams: function (params) {
+                var paramObj = {
+                    type: $("#sltLogType").val(),
+                    keyvalue: $("#txtKeyValue").val(),
+                    starttime: $("#dtStartTime").find("input").val(),
+                    endtime: $("#dtEndTime").find("input").val(),
+                    keyword: $("#txtKeyWord").val(),
+                    userid: $("#txtUserID").val(),
+                    clientip: $("#txtClientIP").val(),
+                    pagesize: params.limit,
+                    pageindex: params.pageNumber
+                };
+                return paramObj;
+            },          //传递参数（*）
+            //列信息。title为列头，field此列取得数组对象的属性
+            columns: [
+                     { field: 'RID', title: '日志ID', visible: false },
+                     { field: 'RowNum', title: '序号' },
+                     { field: 'Type', title: '类型', formatter: function (value, row, index) { return getLogType(value); } },
+                     { field: 'KeyValue', title: 'Key值' },
+                     { field: 'LogTime', title: '时间', sortable: true, formatter: function (value, row, index) { return getDate(value); } },
+                     { field: 'Content', title: '内容', formatter: function (value, row, index) { return value.substr(0, 50) + '...'; } },
+                     { field: 'UserID', title: '用户ID' },
+                     { field: 'ClientIP', title: '客户端IP' }
+            ],
+            //打开子列表
+            onExpandRow: function (index, row, $detail) {
+                $detail.html(row.Content);
+            },
+            //表格加载前，可以在此方法里处理一些逻辑
+            onBeforeLoad: function (datagrid) {
+                console.log('开始加载 表格数据');
+            },
+            //ajax请求成功时调用的方法
+            onComplete: function (datagrid) {
+                console.log("数据请求完成！");
+            },
+            //ajax请求失败处理
+            onError: function (datagrid) {
+                console.log("数据请求发生错误！");
+            },
+            //ajax请求成功返回，表格加载完毕后的处理
+            onLoadSuccess: function (obj) {
+                console.log("表格加载成功！");
+                //table.totalRows = parseInt(obj.TotalCount);
+            }
+        });
+        //查询
+        $("#btnSearch").click(function () {
+            $(".table").bootstrapTable("refresh");
+        });
+
+    </script>
+}
+
+
+
+
