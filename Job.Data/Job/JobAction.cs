@@ -78,8 +78,7 @@ namespace Job.Data
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     var templist = await conn.QueryAsync<JobInfo>(sql, parameters);
-                    return templist.ToList();
-                    //list = templist.Result.ToList();
+                    list = templist.ToList();
                 }
             }
             catch (Exception ex)
@@ -102,7 +101,7 @@ namespace Job.Data
             parameters.Add("Id", id);
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                jobInfo = await conn.QueryFirstOrDefaultAsync<JobInfo>(sql);
+                jobInfo = await conn.QueryFirstOrDefaultAsync<JobInfo>(sql, parameters);
             }
             return jobInfo;
         }
@@ -125,7 +124,7 @@ namespace Job.Data
             parameters.Add("Description", job.Description);
             parameters.Add("Status", job.Status);
             parameters.Add("Creator", job.Creator);
-            parameters.Add("Modifer", job.Modifier);
+            parameters.Add("Modifer", job.Modifer);
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 return await conn.ExecuteAsync(sql, parameters);
@@ -145,48 +144,48 @@ namespace Job.Data
             #region 按修改字段组合更新语句 
             if (job.Name != jobInfo.Name)
             {
-                sql += ",set Name=@Name";
+                sql += ", Name=@Name";
                 parameters.Add("Name", job.Name);
             }
             if (job.GroupName != jobInfo.GroupName)
             {
-                sql += ",set GroupName=@GroupName";
+                sql += ", GroupName=@GroupName";
                 parameters.Add("GroupName", job.GroupName);
             }
             if (job.RequestUrl != jobInfo.RequestUrl)
             {
-                sql += ",set RequestUrl=@RequestUrl";
+                sql += ", RequestUrl=@RequestUrl";
                 parameters.Add("RequestUrl", job.RequestUrl);
             }
             if (job.RequestType != jobInfo.RequestType)
             {
-                sql += ",set RequestType=@RequestType";
+                sql += ", RequestType=@RequestType";
                 parameters.Add("RequestType", job.RequestType);
             }
             if (job.OutTime != jobInfo.OutTime)
             {
-                sql += ",set OutTime=@OutTime";
+                sql += ", OutTime=@OutTime";
                 parameters.Add("OutTime", job.OutTime);
             }
             if (job.Trigger != jobInfo.Trigger)
             {
-                sql += ",set Trigger=@Trigger";
+                sql += ", [Trigger]=@Trigger";
                 parameters.Add("Trigger", job.Trigger);
             }
             if (job.Description != jobInfo.Description)
             {
-                sql += ",set Description=@Description";
+                sql += ", Description=@Description";
                 parameters.Add("Description", job.Description);
             }
             if (job.Status != jobInfo.Status)
             {
-                sql += ",set Status=@Status";
+                sql += ", [Status]=@Status";
                 parameters.Add("Status", job.Status);
             }
-            if (job.Modifier != jobInfo.Modifier)
+            if (job.Modifer != jobInfo.Modifer)
             {
-                sql += ",set Modifier=@Modifier";
-                parameters.Add("Modifier", job.Modifier);
+                sql += ", Modifier=@Modifier";
+                parameters.Add("Modifier", job.Modifer);
             }
             sql += " where Id=@Id";
             parameters.Add("Id", job.Id);

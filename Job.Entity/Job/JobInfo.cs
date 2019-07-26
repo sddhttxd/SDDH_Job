@@ -30,7 +30,7 @@ namespace Job.Entity
         /// <summary>
         /// 请求类型
         /// </summary>
-        public RequestType RequestType { get; set; }
+        public string RequestType { get; set; }
         /// <summary>
         /// 超时时长，单位毫秒
         /// </summary>
@@ -46,7 +46,7 @@ namespace Job.Entity
         /// <summary>
         /// 任务状态(0:无效,1:有效)
         /// </summary>
-        public int Status { get; set; }
+        public JobStatus Status { get; set; }
         /// <summary>
         /// 创建人
         /// </summary>
@@ -58,7 +58,7 @@ namespace Job.Entity
         /// <summary>
         /// 修改人
         /// </summary>
-        public string Modifier { get; set; }
+        public string Modifer { get; set; }
         /// <summary>
         /// 修改时间
         /// </summary>
@@ -73,4 +73,11 @@ namespace Job.Entity
         Get,
         Post,
     }
+
+    public enum JobStatus
+    {
+        On,  //开启
+        Off  //关闭
+    }
+
 }

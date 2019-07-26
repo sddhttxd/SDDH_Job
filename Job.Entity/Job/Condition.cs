@@ -31,5 +31,13 @@ namespace Job.Entity
         /// 创建时间截止
         /// </summary>
         public DateTime? CreateTimeEnd { get; set; }
+        /// <summary>
+        /// 每页条数
+        /// </summary>
+        public int PageSize { get; set; }
+        /// <summary>
+        /// 页码
+        /// </summary>
+        public int PageIndex { get; set; }
     }
 }

@@ -271,11 +271,8 @@
     <Content Include="Views\User\UserLogin.cshtml" />
     <Content Include="Views\User\UserRegist.cshtml" />
     <Content Include="Views\Log\LogList.cshtml" />
-    <Content Include="Views\JBRecord\JBList.cshtml" />
     <Content Include="Views\User\UserDetail.cshtml" />
     <Content Include="Views\User\UserEdit.cshtml" />
-    <Content Include="Views\QJRecord\QJList.cshtml" />
-    <Content Include="Views\TXHours\TXList.cshtml" />
     <Content Include="Views\Job\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

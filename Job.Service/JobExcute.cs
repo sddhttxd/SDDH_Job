@@ -33,10 +33,10 @@ namespace Job.Service
                 {
                     switch (jobInfo.RequestType)
                     {
-                        case RequestType.Get:
+                        case "Get":
                             HttpHelper.HttpGet(jobInfo.RequestUrl, jobInfo.OutTime);
                             break;
-                        case RequestType.Post:
+                        case "Post":
                             HttpHelper.HttpPost(jobInfo.RequestUrl, "", jobInfo.OutTime);
                             break;
                     }

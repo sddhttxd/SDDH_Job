@@ -14,9 +14,9 @@
         <div class="form-group">
             <label id="sltJobStatus" class="control-label">任务状态：</label>
             <select class="form-control">
-                <option value="2">全部</option>
-                <option value="1">开启</option>
-                <option value="0">关闭</option>
+                <option value="">全部</option>
+                <option value="0">开启</option>
+                <option value="1">关闭</option>
             </select>
         </div>
         <div class="form-group">
@@ -85,8 +85,8 @@
                         <label for="firstname" class="col-sm-3 control-label">请求方式：</label>
                         <div class="col-sm-6">
                             <select id="add_sltRequestType" class="form-control">
-                                <option value="0">Get</option>
-                                <option value="1">Post</option>
+                                <option value="Get">Get</option>
+                                <option value="Post">Post</option>
                             </select>
                         </div>
                     </div>
@@ -112,8 +112,8 @@
                         <label for="firstname" class="col-sm-3 control-label">任务状态：</label>
                         <div class="col-sm-6">
                             <select id="add_sltJobStatus" class="form-control">
-                                <option value="1">开启</option>
-                                <option value="0">关闭</option>
+                                <option value="0">开启</option>
+                                <option value="1">关闭</option>
                             </select>
                         </div>
                     </div>
@@ -156,26 +156,6 @@
                 locale: moment.locale('zh-cn')
             });
 
-            @*var userid=@ViewData["UserID"];
-            var year = @ViewData["Year"];
-            var month = @ViewData["Month"];
-            if(userid!=0){$("#txtUserID").val(userid);}
-            if(year!=0&&month==0){
-                $("#dtStartTime").find("input").val(year+"-01-01 00:00:00");
-                $("#dtEndTime").find("input").val(year+"-12-31 23:59:59");
-            }
-            if(year!=0&&month!=0){
-                $("#dtStartTime").find("input").val(year+"-"+month+"-01 00:00:00");
-                if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
-                    $("#dtEndTime").find("input").val(year+"-"+month+"-31 23:59:59");
-                }else if(month==4||month==6||month==9||month==11){
-                    $("#dtEndTime").find("input").val(year+"-"+month+"-30 23:59:59");
-                }else if(month==2&&(year%4==0||year%400==0)){
-                    $("#dtEndTime").find("input").val(year+"-"+month+"-29 23:59:59");
-                }else if(month==2&&year%4!=00&&year%400!=0){
-                    $("#dtEndTime").find("input").val(year+"-"+month+"-28 23:59:59");
-                }
-            }*@
             var oTable = new tableInit();
             oTable.Init();
         });
@@ -188,7 +168,7 @@
                     title: "任务列表",                  //标题
                     url: 'GetList',                     //请求后台的URL（*）
                     method: 'post',                     //请求方式（*）
-                    async: false,                       //ajax请求的时候是同步还是异步。true为异步
+                    async: true,                       //ajax请求的时候是同步还是异步。true为异步
                     toolbar: '#toolbar',                //工具按钮用哪个容器
                     pagination: true,                   //是否显示分页（*）
                     sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
@@ -208,34 +188,45 @@
                             Status: $("#sltJobStatus").val(),
                             CreateTimeStart: $("#dtStartTime").find("input").val(),
                             CreateTimeEnd: $("#dtEndTime").find("input").val(),
-                            pagesize: params.limit,
-                            pageindex: params.pageNumber
+                            PageSize: params.limit,
+                            PageIndex: params.pageNumber
                         };
                         return paramObj;
                     },
                     //列信息。title为列头，field此列取得数组对象的属性
                     columns: [
-                             { field: '', title: '', width: 20, checkbox: true },
-                             { field: 'ID', title: '任务编号', visible: false },
-                             //{ field: 'RowNum', title: '序号' },
-                             { field: 'Name', title: '任务名称', sortable: true },
-                             { field: 'GroupName', title: '分组名称', sortable: true },
-                             { field: 'RequestUrl', title: '请求地址', sortable: true },
-                             { field: 'RequestType', title: '请求方式', sortable: true },
-                             { field: 'OutTime', title: '超时时长', sortable: true },
-                             { field: 'Trigger', title: '执行条件', sortable: true },
-                             { field: 'Status', title: '任务状态', sortable: true },
-                             { field: 'Description', title: '任务描述', sortable: true },
-                             { field: 'Creator', title: '创建人', sortable: true },
-                             { field: 'Modifer', title: '修改人', sortable: true },
-                             {
-                                 field: 'CreateTime', title: '创建时间', sortable: true, formatter:
-                                   function (value, row, index) { return getDate(value); }
-                             },
-                             {
-                                 field: 'ModifiedTime', title: '修改时间', sortable: true, formatter:
-                                   function (value, row, index) { return getDate(value); }
-                             }
+                        { field: '', title: '', width: 20, checkbox: true },
+                        { field: 'Id', title: '任务编号', visible: false },
+                        //{ field: 'RowNum', title: '序号' },
+                        { field: 'Name', title: '任务名称', sortable: true },
+                        { field: 'GroupName', title: '分组名称', sortable: true },
+                        { field: 'RequestUrl', title: '请求地址', sortable: true },
+                        { field: 'RequestType', title: '请求方式', sortable: true },
+                        { field: 'OutTime', title: '超时时长', sortable: true },
+                        { field: 'Trigger', title: '执行条件', sortable: true },
+                        {
+                            field: 'Status', title: '任务状态', sortable: true, formatter: function (value) {
+                                switch (value) {
+                                    case 0:
+                                        return "开启";
+                                        break;
+                                    case 1:
+                                        return "关闭";
+                                        break;
+                                }
+                            }
+                        },
+                        { field: 'Description', title: '任务描述', sortable: true },
+                        { field: 'Creator', title: '创建人', sortable: true },
+                        { field: 'Modifer', title: '修改人', sortable: true },
+                        {
+                            field: 'CreateTime', title: '创建时间', sortable: true, formatter:
+                                function (value, row, index) { return getDate(value); }
+                        },
+                        {
+                            field: 'ModifiedTime', title: '修改时间', sortable: true, formatter:
+                                function (value, row, index) { return getDate(value); }
+                        }
                     ],
                     //表格加载前，可以在此方法里处理一些逻辑
                     onBeforeLoad: function (datagrid) {
@@ -269,10 +260,14 @@
             var selectedRow = $(".table").bootstrapTable('getSelections');
             if (selectedRow.length >= 1) {
                 $("#Modal").modal('show');
-                $("#add_dtStartTime").find("input").val(getDate(selectedRow[0].STime));
-                $("#add_dtEndTime").find("input").val(getDate(selectedRow[0].ETime));
-                $("#add_txtHours").val(selectedRow[0].Hours);
-                $("#add_txtRemark").val(selectedRow[0].Remark);
+                $("#add_txtJobName").val(selectedRow[0].Name);
+                $("#add_txtGroupName").val(selectedRow[0].GroupName);
+                $("#add_txtRequestUrl").val(selectedRow[0].RequestUrl);
+                $("#add_sltRequestType").val(selectedRow[0].RequestType);
+                $("#add_txtOutTime").val(selectedRow[0].OutTime);
+                $("#add_txtTrigger").val(selectedRow[0].Trigger);
+                $("#add_txtDescription").val(selectedRow[0].Description);
+                $("#add_sltJobStatus").val(selectedRow[0].Status);
                 actionFlag = "edit";
             } else {
                 alert("请选择记录！");
@@ -282,17 +277,21 @@
         //添加/修改提交
         $("#btnSubmit").click(function () {
             var data = new Object();
-            data.STime = $("#add_dtStartTime").find("input").val();
-            data.ETime = $("#add_dtEndTime").find("input").val();
-            data.Hours = $("#add_txtHours").val();
-            data.Remark = $("#add_txtRemark").val();
+            data.Name = $("#add_txtJobName").val();
+            data.GroupName = $("#add_txtGroupName").val();
+            data.RequestUrl = $("#add_txtRequestUrl").val();
+            data.RequestType = $("#add_sltRequestType").val();
+            data.OutTime = $("#add_txtOutTime").val();
+            data.Trigger = $("#add_txtTrigger").val();
+            data.Description = $("#add_txtDescription").val();
+            data.Status = $("#add_sltJobStatus").val();
             var action = "";
             if (actionFlag == "add") {
-                action = "AddJB";
+                action = "AddJob";
             } else if (actionFlag == "edit") {
-                action = "EditJB";
+                action = "EditJob";
                 var selectedRow = $(".table").bootstrapTable('getSelections');
-                data.JID = selectedRow[0].JID;
+                data.Id = selectedRow[0].Id;
             } else {
                 return;
             }
@@ -322,11 +321,11 @@
             var selectedRow = $(".table").bootstrapTable('getSelections');
             if (selectedRow.length >= 1) {
                 var data = new Object();
-                data.JID = selectedRow[0].JID;
+                data.Id = selectedRow[0].Id;
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: "DeleteJB",
+                    url: "DeleteJob",
                     data: data,
                     async: false,
                     error: function (request) {

@@ -43,9 +43,10 @@ namespace Job.Bussiness
         /// </summary>
         /// <param name="job"></param>
         /// <returns></returns>
-        public async static Task<int> AddJob(JobInfo job)
+        public async static Task<bool> AddJob(JobInfo job)
         {
-            return await JobAction.AddJob(job);
+            int result = await JobAction.AddJob(job);
+            return result > 0;
         }
 
         /// <summary>
@@ -53,9 +54,10 @@ namespace Job.Bussiness
         /// </summary>
         /// <param name="job"></param>
         /// <returns></returns>
-        public async static Task<int> EditJob(JobInfo job)
+        public async static Task<bool> EditJob(JobInfo job)
         {
-            return await JobAction.EditJob(job);
+            int result = await JobAction.EditJob(job);
+            return result > 0;
         }
 
         /// <summary>
@@ -65,9 +67,10 @@ namespace Job.Bussiness
         /// <param name="status">状态（0：关闭，1：开启）</param>
         /// <param name="userName">操作人</param>
         /// <returns></returns>
-        public async static Task<int> SwitchJob(List<int> jobIds, int status, string userName)
+        public async static Task<bool> SwitchJob(List<int> jobIds, int status, string userName)
         {
-            return await JobAction.SwitchJob(jobIds, status, userName);
+            int result = await JobAction.SwitchJob(jobIds, status, userName);
+            return result > 0;
         }
 
 
